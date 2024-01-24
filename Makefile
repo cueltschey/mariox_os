@@ -5,7 +5,7 @@ SRC_DIR=src
 TOOLS_DIR=tools
 BUILD_DIR=build
 
-.PHONY: all main_mariox bootloader clean always
+.PHONY: all floppy_image kernel main_mariox bootloader clean always tools_fat
 
 all: floppy_image tools_fat
 
@@ -46,7 +46,7 @@ $(BUILD_DIR)/kernel.bin: always
 tools_fat: $(BUILD_DIR)/tools/fat
 $(BUILD_DIR)/tools/fat: always $(TOOLS_DIR)/fat/fat.c
 	mkdir -p $(BUILD_DIR)/tools
-	#$(CC)
+	$(CC) -g -o $(BUILD_DIR)/tools/fat $(TOOLS_DIR)/fat/fat.c
 
 #
 # Utilties
