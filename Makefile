@@ -1,9 +1,13 @@
 ASM=nasm
+CC=gcc
 
 SRC_DIR=src
+TOOLS_DIR=tools
 BUILD_DIR=build
 
 .PHONY: all main_mariox bootloader clean always
+
+all: floppy_image tools_fat
 
 #
 # Floppy image
@@ -36,6 +40,13 @@ kernel: $(BUILD_DIR)/kernel.bin
 
 $(BUILD_DIR)/kernel.bin: always
 	$(ASM) $(SRC_DIR)/kernel/main.asm -f bin -o $(BUILD_DIR)/kernel.bin
+#
+# Tools
+#
+tools_fat: $(BUILD_DIR)/tools/fat
+$(BUILD_DIR)/tools/fat: always $(TOOLS_DIR)/fat/fat.c
+	mkdir -p $(BUILD_DIR)/tools
+	#$(CC)
 
 #
 # Utilties
